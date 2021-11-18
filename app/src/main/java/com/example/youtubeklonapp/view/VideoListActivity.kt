@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.youtubeklonapp.BuildConfig
 import com.example.youtubeklonapp.R
 import com.example.youtubeklonapp.viewmodel.VideoListViewModel
 
@@ -19,7 +20,7 @@ class VideoListActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.fragment_all_videos)
         videoListViewModel = ViewModelProviders.of(this).get(VideoListViewModel::class.java)
-        videoListViewModel.getDataFromAPI("snippet","date","5","date","AIzaSyBRCMfcJeQmzwztn_OP_C5kfW09fi3pqx0")
+        videoListViewModel.getDataFromAPI("snippet","date","5","date", BuildConfig.API_KEY)
         getLiveData()
     }
     private fun getLiveData() {

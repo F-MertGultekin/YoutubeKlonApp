@@ -11,6 +11,7 @@ import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.youtubeklonapp.R
+import com.example.youtubeklonapp.model.Item
 import com.example.youtubeklonapp.model.Videos
 
 class VideosCardAdapter(private val videos : Videos, val context: Context): RecyclerView.Adapter<VideosCardAdapter.ViewHolder>() {
@@ -18,13 +19,32 @@ class VideosCardAdapter(private val videos : Videos, val context: Context): Recy
 
 
     class ViewHolder(itemView: View) : View.OnClickListener, RecyclerView.ViewHolder(itemView) {
+        private lateinit var item : Item
         val Layout = itemView.findViewById<CardView>(R.id.videos_cv)
         val Title : TextView = itemView.findViewById<TextView>(R.id.Title)
         val ViewCount : TextView = itemView.findViewById<TextView>(R.id.ViewCount)
         val ChannelName : TextView = itemView.findViewById<TextView>(R.id.ChannelName)
         val VideoImage : ImageView = itemView.findViewById<ImageView>(R.id.VideoImage)
+
+        init {
+            itemView.setOnClickListener(this)
+        }
+        fun bind(item : Item,context: Context)
+        {
+            this.item = item
+            ChannelName.text = item.snippet.channelTitle
+            Title.text = item.snippet.title
+
+            Glide.with(context).load(item.snippet.thumbnails.high.url)
+                .into(VideoImage)
+        }
         override fun onClick(v: View?) {
-            TODO("Not yet implemented")
+            v?.let {
+                val context = it.context
+                val intent = VideoPlayerActivity.newIntent(context, item.id.videoId,item.snippet.title,item.snippet.description)
+                context.startActivity(intent)
+            }
+
         }
     }
 
@@ -36,11 +56,7 @@ class VideosCardAdapter(private val videos : Videos, val context: Context): Recy
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.ChannelName.text = videos.items[position].snippet.channelTitle
-        holder.Title.text = videos.items[position].snippet.title
-
-        Glide.with(context).load(videos.items[position].snippet.thumbnails.high.url)
-            .into(holder.VideoImage)
+        holder.bind(videos.items[position],context)
 
     }
 

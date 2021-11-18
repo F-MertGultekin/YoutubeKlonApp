@@ -23,7 +23,7 @@
         android:theme="@style/Theme.YoutubeKlonApp"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".view.MainActivity"
+            android:name=".view.VideoPlayerActivity"
             android:exported="false" />
         <activity
             android:name=".view.VideoListActivity"
