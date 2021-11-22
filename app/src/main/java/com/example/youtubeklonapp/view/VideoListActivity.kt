@@ -2,11 +2,9 @@ package com.example.youtubeklonapp.view
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.example.youtubeklonapp.BuildConfig
 import com.example.youtubeklonapp.R
 import com.example.youtubeklonapp.viewmodel.VideoListViewModel

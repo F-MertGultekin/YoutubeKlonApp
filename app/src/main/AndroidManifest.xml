@@ -22,12 +22,16 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.YoutubeKlonApp"
         android:usesCleartextTraffic="true">
+
         <activity
             android:name=".view.VideoPlayerActivity"
             android:exported="false" />
         <activity
             android:name=".view.VideoListActivity"
-            android:exported="true">
+            android:exported="true"/>
+        <activity
+                android:name=".view.SplashScreenActivity"
+                android:theme="@style/SplashTheme" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
