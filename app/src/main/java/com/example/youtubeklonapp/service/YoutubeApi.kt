@@ -1,5 +1,6 @@
 package com.example.youtubeklonapp.service
 
+import com.example.youtubeklonapp.BuildConfig
 import com.example.youtubeklonapp.model.Videos
 import io.reactivex.Single
 import retrofit2.http.GET
@@ -13,8 +14,9 @@ interface YoutubeApi
 
         @Query("part") part: String,
         @Query("order") order: String,
-        @Query("maxResults") maxResults: String,
+        @Query("maxResults") maxResults: String ,
         @Query("type") type: String,
-        @Query("key") key: String
+        @Query("key") key: String,
+        @Query("q") query: String?
     ) : Single<Videos> //?????????????
 }

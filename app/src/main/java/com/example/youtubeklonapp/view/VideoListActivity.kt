@@ -2,6 +2,8 @@ package com.example.youtubeklonapp.view
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.SearchView
+import android.widget.Toast
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -14,11 +16,27 @@ import com.example.youtubeklonapp.viewmodel.VideoListViewModel
 // gmail hesabı api AIzaSyBL6zWafLr1KCpazirfcVMu3ufCFMKkbfs
 class VideoListActivity : AppCompatActivity() {
     private lateinit var videoListViewModel : VideoListViewModel
+    lateinit var searchView: SearchView
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.fragment_all_videos)
+        searchView = findViewById(R.id.svSearch)
         videoListViewModel = ViewModelProviders.of(this).get(VideoListViewModel::class.java)
-        videoListViewModel.getDataFromAPI("snippet","date","5","date", BuildConfig.API_KEY)
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                videoListViewModel.getDataFromAPI("snippet","date","5","video", BuildConfig.API_KEY,query)
+                return true
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                videoListViewModel.getDataFromAPI("snippet","date","5","video", BuildConfig.API_KEY,newText)
+                return true
+            }
+
+        })
+
+        videoListViewModel.getDataFromAPI("snippet","date","5","video", BuildConfig.API_KEY,"")
         getLiveData()
     }
     private fun getLiveData() {

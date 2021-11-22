@@ -18,7 +18,7 @@ class YoutubeApiService {
         .create(YoutubeApi::class.java)
 
 
-    fun getDataService(part: String, order : String, maxResult : String, type : String, key : String): Single<Videos> {
-        return api.getVideosData(part, order, maxResult, type, key)
+    fun getDataService(part: String, order : String, maxResult : String, type : String, key : String, query : String?): Single<Videos> {
+        return api.getVideosData(part, order, maxResult, type, key,query)
     }//Mutable list mi döndürcez
 }

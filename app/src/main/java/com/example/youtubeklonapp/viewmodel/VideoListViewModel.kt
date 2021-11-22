@@ -1,6 +1,7 @@
 package com.example.youtubeklonapp.viewmodel
 
 import android.util.Log
+import androidx.databinding.BaseObservable
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.bumptech.glide.load.engine.executor.GlideExecutor.UncaughtThrowableStrategy.LOG
@@ -11,7 +12,7 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.observers.DisposableSingleObserver
 import io.reactivex.schedulers.Schedulers
 
-class VideoListViewModel : ViewModel(){
+class VideoListViewModel : ViewModel() {
 
 
     private val youtubeApiService = YoutubeApiService()//youtubeApiService : YoutubeApiService() farkını sor getter setter istiyorbböyle
@@ -19,10 +20,10 @@ class VideoListViewModel : ViewModel(){
 
     val videos = MutableLiveData<Videos>()
 
-     fun getDataFromAPI(part: String, order : String, maxResult : String, type : String, key: String)
+     fun getDataFromAPI(part: String, order : String, maxResult : String, type : String, key: String, query: String?)
     {
         disposable.add(
-            youtubeApiService.getDataService(part,order,maxResult,type,key)
+            youtubeApiService.getDataService(part,order,maxResult,type,key,query)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(object: DisposableSingleObserver<Videos>(){

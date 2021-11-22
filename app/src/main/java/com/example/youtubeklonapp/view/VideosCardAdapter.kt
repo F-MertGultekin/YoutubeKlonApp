@@ -32,6 +32,7 @@ class VideosCardAdapter(private val videos : Videos, val context: Context): Recy
         fun bind(item : Item,context: Context)
         {
             this.item = item
+
             ChannelName.text = item.snippet.channelTitle
             Title.text = item.snippet.title
 
