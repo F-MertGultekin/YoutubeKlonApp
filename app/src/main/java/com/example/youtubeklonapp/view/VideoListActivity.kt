@@ -22,6 +22,7 @@ class VideoListActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.fragment_all_videos)
         searchView = findViewById(R.id.svSearch)
+
         videoListViewModel = ViewModelProviders.of(this).get(VideoListViewModel::class.java)
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {

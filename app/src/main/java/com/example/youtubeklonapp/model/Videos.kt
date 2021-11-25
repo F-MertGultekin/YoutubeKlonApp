@@ -14,5 +14,6 @@ data class Videos(
     @SerializedName("pageInfo")
     val pageInfo: PageInfo,
     @SerializedName("regionCode")
-    val regionCode: String
+    val regionCode: String,
+
 )

@@ -10,7 +10,7 @@ android {
 
     defaultConfig {
         applicationId "com.example.youtubeklonapp"
-        minSdk 28
+        minSdk 21
         targetSdk 30
         versionCode 1
         versionName "1.0"
@@ -85,7 +85,14 @@ dependencies {
 
     //databinding için, ayrıca plugin kapt ve datainding enabled edildi burada
     kapt "com.android.databinding:compiler:3.1.4"
-    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.0"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+
+    //Room DB
+    implementation "androidx.room:room-runtime:2.3.0"
+    kapt "androidx.room:room-compiler:2.3.0"
+    implementation "androidx.activity:activity-ktx:1.3.0"
+
+    implementation 'androidx.fragment:fragment-ktx:1.3.0'
 
 }
