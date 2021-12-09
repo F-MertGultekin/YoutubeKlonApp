@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:gravity="center_horizontal"
     android:orientation="vertical"
     tools:context="com.example.youtubeklonapp.view.VideoPlayerActivity">
-
 
     <com.google.android.youtube.player.YouTubePlayerView
         android:id="@+id/youtubePlayer"
@@ -20,15 +19,4 @@
         android:layout_height="wrap_content"
         android:text="Play Video" />
 
-    <ImageButton
-        android:id="@+id/favoriteButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-
-        android:background="@android:color/transparent"
-        android:scaleType="fitXY"
-        app:tint="@color/purple_700"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_baseline_favorite_border_24" />
 </LinearLayout>
