@@ -5,10 +5,15 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity(tableName = "VIDEO_ENTITY")
-data class VideoEntitiy(
+data class VideoEntity(
 
-    @ColumnInfo(name = "ID") @PrimaryKey(autoGenerate = true) val id: Int,
-    @ColumnInfo(name = "VIDEO_ID") val videoId: String,
+    @ColumnInfo(name = "VIDEO_ID") val videoId: String?,
     @ColumnInfo(name = "IS_FAVORITE") val isFavorite: String
 
 )
+{
+    @ColumnInfo(name = "ID")
+    @PrimaryKey(autoGenerate = true)
+    var id: Long? = null
+}
+

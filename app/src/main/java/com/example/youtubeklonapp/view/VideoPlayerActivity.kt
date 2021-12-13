@@ -4,20 +4,28 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
+import android.widget.ImageButton
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import com.example.youtubeklonapp.BuildConfig
 import com.example.youtubeklonapp.R
-import com.google.android.youtube.player.YouTubeBaseActivity
+import com.example.youtubeklonapp.YoutubeKlonApplication
+import com.example.youtubeklonapp.entitiy.VideoEntity
 import com.google.android.youtube.player.YouTubeInitializationResult
 import com.google.android.youtube.player.YouTubePlayer
 import com.google.android.youtube.player.YouTubePlayerView
 
-class VideoPlayerActivity : YouTubeBaseActivity() {
+class VideoPlayerActivity : AppCompatActivity() {
 
-    lateinit var youTubePlayer: YouTubePlayerView
-    lateinit var btnPlayer: Button
+    var str :String =""
     lateinit var youtubePlayerInit: YouTubePlayer.OnInitializedListener
+    lateinit var youTubePlayer: YouTubePlayerView
     val YOUTUBE_API_KEY: String = BuildConfig.API_KEY
+    lateinit var btnPlayer: Button
+
+    lateinit var btnFavorite : ImageButton
+    private val repository by lazy { YoutubeKlonApplication.repository }
+
     companion object {
         const val VIDEO_ID: String = "VIDEO_ID"
         const val VIDEO_TITLE: String= "VIDEO_TITLE"
@@ -38,8 +46,52 @@ class VideoPlayerActivity : YouTubeBaseActivity() {
         setContentView(R.layout.activity_video_player)
         youTubePlayer= findViewById(R.id.youtubePlayer)
         btnPlayer= findViewById(R.id.btnPlay)
+        btnFavorite = findViewById(R.id.btnFavorite)
+        btnPlayer.text = intent.getStringExtra(VIDEO_TITLE)
+        var videoId = intent.getStringExtra(VIDEO_ID)
+        val isExist = repository.exists(videoId)
+        if(!isExist){//Entity yoksa
+            val videoEntity = VideoEntity(videoId,"false")
+            repository.insertVideo(videoEntity)
 
-        btnPlayer.setText(intent.getStringExtra(VIDEO_TITLE))
+        }
+        else{//Entity varsa
+            if(repository.getVideoById(videoId).isFavorite=="false")//ve favori değilse
+            {
+                btnFavorite.setImageResource(R.drawable.ic_baseline_favorite_border_24)
+            }
+            else
+            {
+                btnFavorite.setImageResource(R.drawable.ic_baseline_favorite_24
+
+                )
+            }
+        }
+        btnFavorite.setOnClickListener {
+            if(repository.getVideoById(videoId).isFavorite=="false")
+            {
+                btnFavorite.setImageResource(R.drawable.ic_baseline_favorite_24)
+                repository.updateVideo(videoId,"true")
+                //resim ayarla
+                //update et
+            }
+            else//favori ise
+            {
+                btnFavorite.setImageResource(R.drawable.ic_baseline_favorite_border_24)
+                repository.updateVideo(videoId,"false")
+                //sileceksin
+                //resim değişecek
+            }
+
+        }
+
+        val list = repository.getVideos()
+        for(i in list){
+            str =str+" ---- " +i.videoId
+        }
+        btnPlayer.text = str
+
+
         initUI()
     }
 

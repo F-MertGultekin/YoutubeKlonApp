@@ -1,38 +1,19 @@
 package com.example.youtubeklonapp.repository
 
-import androidx.annotation.WorkerThread
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import com.example.youtubeklonapp.dao.VideoDao
-import com.example.youtubeklonapp.entitiy.VideoEntitiy
-import kotlinx.coroutines.flow.Flow
 
-class VideoRepository(private val videoDao: VideoDao) {
+import com.example.youtubeklonapp.entitiy.VideoEntity
 
-    val allFavoriteVideos: LiveData<List<VideoEntitiy>> = videoDao.getAllStudents()
-    @Suppress("RedundantSuspendModifier")
-    @WorkerThread
-    suspend fun insert(videoEntitiy: VideoEntitiy) {
-        videoDao.insert(videoEntitiy)
-    }
+interface VideoRepository {
 
-    @Suppress("RedundantSuspendModifier")
-    @WorkerThread
-    suspend fun delete(videoEntitiy: VideoEntitiy) {
-        videoDao.delete(videoEntitiy)
-    }
-    @Suppress("RedundantSuspendModifier")
-    @WorkerThread
-    suspend fun getAllStudents() : LiveData<List<VideoEntitiy>>  {
-        return videoDao.getAllStudents()
-    }
-    @Suppress("RedundantSuspendModifier")
-    @WorkerThread
-    suspend fun deleteAll() {
-         videoDao.deleteAll()
-    }
+    fun insertVideo(videoEntitiy: VideoEntity)
 
-    fun getVideoById(videoId : String) : LiveData<VideoEntitiy?>? {
-       return videoDao.getVideoById(videoId)
-    }
+    fun deleteVideo(videoEntitiy: VideoEntity)
+
+    fun getVideos(): List<VideoEntity>
+
+    fun getVideoById(videoId: String?) : VideoEntity
+
+    fun exists(videoId: String?): Boolean
+
+    fun updateVideo(videoId : String?, isFavorite : String)
 }

@@ -1,29 +1,28 @@
 package com.example.youtubeklonapp.dao
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.room.Dao
-import androidx.room.Delete
-import androidx.room.Insert
-import androidx.room.Query
-import com.example.youtubeklonapp.entitiy.VideoEntitiy
+import androidx.room.*
+import com.example.youtubeklonapp.entitiy.VideoEntity
 
 @Dao
 interface VideoDao {
 
     @Insert
-    fun insert(videoEntitiy: VideoEntitiy)
+    fun insertVideo(videoEntitiy: VideoEntity)
 
     @Delete
-    fun delete(videoEntitiy: VideoEntitiy)
+    fun deleteVideo(videoEntitiy: VideoEntity)
 
     @Query("SELECT*FROM video_entity")
-    fun getAllStudents(): LiveData<List<VideoEntitiy>>
-
-    @Query("DELETE FROM video_entity")
-    fun deleteAll()
+    fun getVideos(): List<VideoEntity>
 
     @Query("SELECT*FROM video_entity WHERE VIDEO_ID = :videoId")
-    fun getVideoById(videoId : String) : LiveData<VideoEntitiy?>?
+    fun getVideoById(videoId: String?) : VideoEntity
+
+    @Query("SELECT EXISTS (SELECT 1 FROM video_entity WHERE VIDEO_ID = :videoId)")
+    fun exists(videoId: String?): Boolean
+
+
+    @Query("UPDATE video_entity SET IS_FAVORITE=:isFavorite WHERE VIDEO_ID = :videoId")
+    fun updateVideo(videoId : String?, isFavorite : String)
 
 }
