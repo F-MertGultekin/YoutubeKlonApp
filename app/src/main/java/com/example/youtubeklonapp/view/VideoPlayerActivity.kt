@@ -53,7 +53,7 @@ class VideoPlayerActivity : AppCompatActivity() {
         if(!isExist){//Entity yoksa
             val videoEntity = VideoEntity(videoId,"false")
             repository.insertVideo(videoEntity)
-
+            btnFavorite.setImageResource(R.drawable.ic_baseline_favorite_border_24)
         }
         else{//Entity varsa
             if(repository.getVideoById(videoId).isFavorite=="false")//ve favori değilse
@@ -86,8 +86,10 @@ class VideoPlayerActivity : AppCompatActivity() {
         }
 
         val list = repository.getVideos()
-        for(i in list){
-            str =str+" ---- " +i.videoId
+        for(i in list) {
+            if (i.isFavorite == "true") {
+                str = str + " ---- " + i.videoId
+            }
         }
         btnPlayer.text = str
 

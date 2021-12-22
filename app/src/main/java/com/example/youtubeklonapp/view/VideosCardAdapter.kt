@@ -14,7 +14,7 @@ import com.example.youtubeklonapp.R
 import com.example.youtubeklonapp.model.Item
 import com.example.youtubeklonapp.model.Videos
 
-class VideosCardAdapter(private val videos : Videos, val context: Context): RecyclerView.Adapter<VideosCardAdapter.ViewHolder>() {
+class VideosCardAdapter(private var items : List<Item>, val context: Context): RecyclerView.Adapter<VideosCardAdapter.ViewHolder>() {
 
 
 
@@ -32,7 +32,6 @@ class VideosCardAdapter(private val videos : Videos, val context: Context): Recy
         fun bind(item : Item,context: Context)
         {
             this.item = item
-
             ChannelName.text = item.snippet.channelTitle
             Title.text = item.snippet.title
 
@@ -48,7 +47,6 @@ class VideosCardAdapter(private val videos : Videos, val context: Context): Recy
 
         }
     }
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.list_item_video_cards,parent,false)
@@ -57,13 +55,20 @@ class VideosCardAdapter(private val videos : Videos, val context: Context): Recy
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(videos.items[position],context)
+        holder.bind(items[position],context)
 
     }
 
     override fun getItemCount(): Int {
 
-        return videos.items.size
+        return items.size
+    }
+
+    fun addData(listItems: List<Item>) {
+        var size = this.items.size
+        this.items += listItems
+        var sizeNew = this.items.size
+        notifyItemRangeChanged(size, sizeNew)
     }
 
 }
