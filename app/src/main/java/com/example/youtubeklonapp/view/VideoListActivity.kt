@@ -1,26 +1,34 @@
 package com.example.youtubeklonapp.view
 
+
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.SearchView
+import android.widget.Toast
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.work.Constraints
+import androidx.work.NetworkType
+import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.WorkManager
+import com.example.youtubeklonapp.APIWorker
 import com.example.youtubeklonapp.BuildConfig
 import com.example.youtubeklonapp.R
-import com.example.youtubeklonapp.model.Videos
 import com.example.youtubeklonapp.viewmodel.VideoListViewModel
-//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
+
+//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 token
 //Pagination için https://stackoverflow.com/questions/51433106/kotlin-recyclerview-pagination
 //https://youtube.googleapis.com/youtube/v3/search?part=snippet&maxResults=5&key=AIzaSyBRCMfcJeQmzwztn_OP_C5kfW09fi3pqx0&order=date&type=video
 // ceng hesabı api AIzaSyBRCMfcJeQmzwztn_OP_C5kfW09fi3pqx0
 // gmail hesabı api AIzaSyBL6zWafLr1KCpazirfcVMu3ufCFMKkbfs
+
 class VideoListActivity : AppCompatActivity() {
     private lateinit var videoListViewModel : VideoListViewModel
-    lateinit var searchView: SearchView
-    lateinit var adapter : VideosCardAdapter
-    var isLastPage: Boolean = false
-    var isLoading: Boolean = false
+    private lateinit var searchView: SearchView
+    private lateinit var adapter : VideosCardAdapter
+    private var isLoading: Boolean = false
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,8 +66,8 @@ class VideoListActivity : AppCompatActivity() {
             }
         })
 
-        var mLayoutManager =  LinearLayoutManager (this,LinearLayoutManager.VERTICAL, false)
-        recyclerView.layoutManager = mLayoutManager;
+        val mLayoutManager =  LinearLayoutManager (this,LinearLayoutManager.VERTICAL, false)
+        recyclerView.layoutManager = mLayoutManager
         recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener(){
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 val visibleItemCount = mLayoutManager.childCount
@@ -85,16 +93,24 @@ class VideoListActivity : AppCompatActivity() {
                     isLoading = false
                     adapter.addData(data.items)
 
-                    //VideoArrayList.add(data)
-
-                    //adapter.notifyItemInserted((VideoArrayList.size)-1)
-                    //now adding the adapter to recyclerview
-                    //adapter.notifyDataSetChanged()
-
-
                 }
             })
+        val constraints = Constraints.Builder()
+            .setRequiredNetworkType(NetworkType.CONNECTED)
+            .setRequiresStorageNotLow(true)
+            .setRequiresBatteryNotLow(false)
+            .build()
+        val request = OneTimeWorkRequestBuilder<APIWorker>()
+            .setConstraints(constraints)
+            .build()
 
+        WorkManager.getInstance().enqueue(request)
+        WorkManager.getInstance().getWorkInfoByIdLiveData(request.id)
+            .observe(this,  {
+
+                val status: String = it.state.name
+                Toast.makeText(this,status, Toast.LENGTH_SHORT).show()
+            })
 
     }
 }

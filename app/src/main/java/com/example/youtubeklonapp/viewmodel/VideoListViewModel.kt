@@ -1,10 +1,12 @@
 package com.example.youtubeklonapp.viewmodel
 
 import android.util.Log
-import androidx.databinding.BaseObservable
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.bumptech.glide.load.engine.executor.GlideExecutor.UncaughtThrowableStrategy.LOG
+import androidx.work.Constraints
+import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.WorkManager
+import com.example.youtubeklonapp.APIWorker
 import com.example.youtubeklonapp.model.Videos
 import com.example.youtubeklonapp.service.YoutubeApiService
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -12,7 +14,7 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.observers.DisposableSingleObserver
 import io.reactivex.schedulers.Schedulers
 
-class VideoListViewModel : ViewModel() {
+class VideoListViewModel : ViewModel(){
 
 
     private val youtubeApiService = YoutubeApiService()//youtubeApiService : YoutubeApiService() farkını sor getter setter istiyorbböyle
@@ -38,6 +40,14 @@ class VideoListViewModel : ViewModel() {
 
                 })
         )
+        /*val constraints = Constraints.Builder()
+            .setRequiresBatteryNotLow(true)
+            .build()
+        val oneTimeWorkRequest = OneTimeWorkRequestBuilder<APIWorker()>()
+            .setConstraints(constraints)
+            .build()
+
+        WorkManager.getInstance().enqueue(oneTimeWorkRequest)*/
 
     }
 }

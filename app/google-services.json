@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "878325278081",
+    "project_id": "youtubeklonapp",
+    "storage_bucket": "youtubeklonapp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:878325278081:android:33992502c18544a7a67480",
+        "android_client_info": {
+          "package_name": "com.example.youtubeklonapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "878325278081-r2dmdpt0c4a0shenoj67hklcdbuvhrka.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB1FzHupQ_KBPzyi1EIBHBf_DF0moz6svE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "878325278081-r2dmdpt0c4a0shenoj67hklcdbuvhrka.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
