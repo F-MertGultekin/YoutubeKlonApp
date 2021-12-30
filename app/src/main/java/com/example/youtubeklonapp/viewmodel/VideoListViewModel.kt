@@ -13,6 +13,9 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.observers.DisposableSingleObserver
 import io.reactivex.schedulers.Schedulers
+import org.koin.android.viewmodel.experimental.builder.viewModel
+import org.koin.android.viewmodel.ext.koin.viewModel
+import org.koin.dsl.module.module
 
 class VideoListViewModel : ViewModel(){
 
@@ -50,4 +53,5 @@ class VideoListViewModel : ViewModel(){
         WorkManager.getInstance().enqueue(oneTimeWorkRequest)*/
 
     }
+
 }
