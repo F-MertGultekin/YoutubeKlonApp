@@ -3,6 +3,7 @@ package com.example.youtubeklonapp.service
 import com.example.youtubeklonapp.BuildConfig
 import com.example.youtubeklonapp.model.Videos
 import io.reactivex.Single
+import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
@@ -19,7 +20,7 @@ class YoutubeApiService {
         .create(YoutubeApi::class.java)
 
 
-    fun getDataService(query : String?,pageToken: String?): Single<Videos> {
+    suspend fun getDataService(query : String?,pageToken: String?): Response<Videos> {
         return api.getVideosData("snippet","date","5","video",BuildConfig.API_KEY,query,pageToken)
     }
 }

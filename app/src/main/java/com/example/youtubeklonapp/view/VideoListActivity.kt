@@ -5,12 +5,14 @@ import android.view.View
 import android.widget.SearchView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.youtubeklonapp.R
 import com.example.youtubeklonapp.databinding.FragmentAllVideosBinding
 import com.example.youtubeklonapp.model.Item
 import com.example.youtubeklonapp.viewmodel.VideoListViewModel
+import kotlinx.coroutines.flow.collect
 import org.koin.android.viewmodel.ext.android.viewModel
 
 //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 token
@@ -77,26 +79,31 @@ class VideoListActivity : AppCompatActivity() {
         )
         this.startActivity(intent)
     }
-    private fun setListeners(){
-        videoListViewModel.videos.observe(this, { data ->
-            val tempList: MutableList<Item> = mutableListOf()
-            data?.let {
-                nextPageToken=data.nextPageToken
-                data.items.forEach { it ->
-                    tempList.add(it)
-                }
-                tempList.forEach{
-                    videoItemList.add(it)
-                }
-                binding.videoRecyclerView.apply {
-                    tempList.clear()
-                    adapter =VideosCardAdapter(ArrayList(videoItemList), context = this@VideoListActivity, initView)
-                    (adapter as VideosCardAdapter).notifyDataSetChanged()
+    private fun setListeners() {
+        lifecycleScope.launchWhenStarted {
+            videoListViewModel.videos.collect() {
+                val tempList: MutableList<Item> = mutableListOf()
+                it?.let {
+                    nextPageToken = it.nextPageToken
+                    it.items.forEach { it ->
+                        tempList.add(it)
+                    }
+                    tempList.forEach {
+                        videoItemList.add(it)
+                    }
+                    binding.videoRecyclerView.apply {
+                        tempList.clear()
+                        adapter = VideosCardAdapter(
+                            ArrayList(videoItemList),
+                            context = this@VideoListActivity,
+                            initView
+                        )
+                        (adapter as VideosCardAdapter).notifyDataSetChanged()
 
+                    }
                 }
-
             }
-        })
+        }
     }
     fun addMoreData(videoItemList: MutableList<Item>, pageToken: String) {
 
