@@ -13,7 +13,8 @@ import com.example.youtubeklonapp.databinding.FragmentAllVideosBinding
 import com.example.youtubeklonapp.model.Item
 import com.example.youtubeklonapp.viewmodel.VideoListViewModel
 import kotlinx.coroutines.flow.collect
-import org.koin.android.viewmodel.ext.android.viewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
+
 
 //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 token
 //Pagination için https://stackoverflow.com/questions/51433106/kotlin-recyclerview-pagination
@@ -29,9 +30,9 @@ class VideoListActivity : AppCompatActivity() {
     private var defaultQuery: String? = ""
     private var nextPageToken: String = "CAoQAA"
     private val firstPageToken: String = ""
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         binding = DataBindingUtil.setContentView(this, R.layout.fragment_all_videos)
         binding.svSearch.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
@@ -128,6 +129,20 @@ class VideoListActivity : AppCompatActivity() {
             })*/
 
     }
+    private fun initKoin() {
+
+        //startKoin(this, listOf(ServiceDependency,VideoListRepositoryDependency,ViewModelDependency))
+
+
+        //https://insert-koin.io/docs/quickstart/kotlin
+        //https://github.com/InsertKoinIO/koin/blob/main/quickstart/getting-started-koin-core/src/main/kotlin/org/koin/sample/HelloApplication.kt
+        //https://github.com/sreeharikv112/KoinDIExample/blob/master/app/src/main/java/com/dev/koindiexample/mainapp/MainApplication.kt
+        //https://medium.com/@sreeharikv112/dependency-injection-using-koin-4de4a3494cbe
+        //https://medium.com/swlh/dependency-injection-with-koin-6b6364dc8dba
+        //https://medium.com/gradeup/dependency-injection-dagger-hilt-vs-koin-ab2f7f85e6c6
+    }
+
+
 }
 
 

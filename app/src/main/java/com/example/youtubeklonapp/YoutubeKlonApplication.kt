@@ -2,12 +2,16 @@ package com.example.youtubeklonapp
 
 import android.app.Application
 import com.example.youtubeklonapp.dao.FavoriteVideosDatabase
+import com.example.youtubeklonapp.repository.NetworkRepository
 import com.example.youtubeklonapp.repository.VideoRepository
 import com.example.youtubeklonapp.repository.VideoRepositoryImpl
-import org.koin.android.ext.android.startKoin
+import com.example.youtubeklonapp.service.YoutubeApiService
 import com.example.youtubeklonapp.viewmodel.VideoListViewModel
-import org.koin.android.viewmodel.ext.koin.viewModel
-import org.koin.dsl.module.module
+import org.koin.android.ext.koin.androidContext
+import org.koin.android.ext.koin.androidLogger
+import org.koin.androidx.viewmodel.dsl.viewModel
+import org.koin.core.context.startKoin
+import org.koin.dsl.module
 
 class YoutubeKlonApplication : Application()
  {
@@ -24,17 +28,25 @@ class YoutubeKlonApplication : Application()
              )
          }
      }
-     val viewModelModule = module {
+     val appModule = module {
 
-         viewModel {
-             VideoListViewModel()
-         }
+         viewModel {VideoListViewModel(get())}
+         single { NetworkRepository(get())}
+         single { YoutubeApiService()}
      }
+
+     //open fun provideDependency() = appComponent
+
      override fun onCreate() {
          super.onCreate()
          instance = this
-         startKoin(this, listOf(viewModelModule))
 
+
+         startKoin{
+             androidLogger()
+             androidContext(this@YoutubeKlonApplication)
+             modules(appModule)
+         }
 
      }
  }

@@ -111,10 +111,21 @@ dependencies {
     //Firebase integration
     implementation platform('com.google.firebase:firebase-bom:29.0.3')
 
-    // Koin implementation
+    /* Koin 1 implementation
     implementation 'org.koin:koin-android:1.0.2'
     implementation 'org.koin:koin-android-viewmodel:1.0.2'
     implementation 'org.koin:koin-androidx-scope:1.0.2'
+     */
 
+    implementation "io.insert-koin:koin-android:3.1.5"
+
+    /* Koin implementation
+    implementation 'org.koin:koin-android:2.0.0'
+    implementation 'org.koin:koin-android-viewmodel:2.0.0'
+    implementation "org.koin:koin-core:2.0.0"
+
+     */
+
+    
 
 }
